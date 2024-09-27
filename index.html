@@ -8,8 +8,7 @@
         body, html {
             height: 100%;
             margin: 0;
-            font-family: 'Courier New', Courier, monospace; /* Tipografía más romántica */
-            background-color: #fce4ec; /* Fondo suave y romántico */
+            font-family: Arial, sans-serif;
         }
 
         /* Estilo del fondo con desvanecido */
@@ -30,7 +29,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.4); /* Oscurece el fondo ligeramente */
+            background: rgba(0, 0, 0, 0.5); /* oscurece el fondo */
         }
 
         /* Estilo del contenido */
@@ -42,34 +41,24 @@
         }
 
         h1 {
-            font-size: 3.5em;
-            font-family: 'Dancing Script', cursive; /* Tipografía romántica */
-            color: #ff80ab;
-        }
-
-        h2 {
-            font-family: 'Dancing Script', cursive;
-            color: #ff80ab;
+            font-size: 3em;
         }
 
         .btn {
-            background-color: #ff80ab; /* Color rosado */
+            background-color: #4CAF50;
             color: white;
-            padding: 14px 30px;
+            padding: 14px 20px;
             margin: 10px;
-            border-radius: 50px;
             border: none;
             cursor: pointer;
-            font-size: 1.5em;
-            transition: background-color 0.3s ease;
-            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2em;
         }
 
         .btn:hover {
-            background-color: #ff4081; /* Color de hover más intenso */
+            background-color: #45a049;
         }
 
-        #options, #no-page, #confirm-page {
+        #options, #no-page, #calendar-section {
             display: none;
         }
 
@@ -105,10 +94,10 @@
         <p><a class="calendar-link" onclick="showOptions()">Ver opciones</a></p>
     </div>
 
-    <!-- Pantalla de confirmación -->
-    <div id="confirm-page" class="content">
-        <h2>Plan seleccionado correctamente</h2>
-        <p>Se ha añadido a tus recordatorios de Apple para el sábado a las 19:30.</p>
+    <!-- Pregunta de agendar en calendario -->
+    <div id="calendar-section" class="content">
+        <h2>¿Quieres agendarlo en tu calendario para el sábado a las 19:30?</h2>
+        <button class="btn" onclick="addToGoogleCalendar()">Sí, agregar al calendario</button>
     </div>
 </div>
 
@@ -125,17 +114,17 @@
         document.getElementById('no-page').style.display = 'block';
     }
 
-    // Mostrar pantalla de confirmación al elegir una opción
+    // Preguntar si desea agregar al calendario al elegir una opción
     function addToCalendar(option) {
+        alert("Has elegido: " + option);
         document.getElementById('options').style.display = 'none';
-        addToAppleReminders(option);
-        document.getElementById('confirm-page').style.display = 'block';
+        document.getElementById('calendar-section').style.display = 'block';
     }
 
-    // Función para añadir a Recordatorios de Apple (simulado)
-    function addToAppleReminders(option) {
-        const reminderUrl = `x-apple-reminder://create?title=${encodeURIComponent(option + ' para el sábado a las 19:30')}`;
-        window.open(reminderUrl, '_blank');
+    // Función para agregar al calendario (enlace simulado)
+    function addToGoogleCalendar() {
+        let calendarUrl = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Plan+para+el+sabado&dates=20240928T193000Z/20240928T203000Z";
+        window.open(calendarUrl, '_blank');
     }
 </script>
 
