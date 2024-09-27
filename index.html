@@ -3,44 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendario estilo Apple</title>
+    <title>¿Te apetece hacer algo hoy juntos?</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            padding: 20px;
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace; /* Tipografía más romántica */
+            background-color: #fce4ec; /* Fondo suave y romántico */
+        }
+
+        /* Estilo del fondo con desvanecido */
+        .background {
+            background-image: url('https://www.example.com/your-image.jpg');
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Desvanecido */
+        .background:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4); /* Oscurece el fondo ligeramente */
+        }
+
+        /* Estilo del contenido */
+        .content {
+            position: relative;
+            color: white;
             text-align: center;
-            background-color: #f0f0f5;
+            padding: 20px;
         }
 
         h1 {
-            color: #333;
+            font-size: 3.5em;
+            font-family: 'Dancing Script', cursive; /* Tipografía romántica */
+            color: #ff80ab;
         }
 
-        label {
-            font-size: 18px;
-            margin-bottom: 10px;
-            display: inline-block;
+        h2 {
+            font-family: 'Dancing Script', cursive;
+            color: #ff80ab;
         }
 
-        input[type="date"] {
-            font-size: 16px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            outline: none;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        .btn {
+            background-color: #ff80ab; /* Color rosado */
+            color: white;
+            padding: 14px 30px;
+            margin: 10px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: background-color 0.3s ease;
+            font-family: 'Courier New', Courier, monospace;
         }
 
-        input[type="date"]:focus {
-            border-color: #007aff; /* Color similar al azul de Apple */
+        .btn:hover {
+            background-color: #ff4081; /* Color de hover más intenso */
+        }
+
+        #options, #no-page, #confirm-page {
+            display: none;
+        }
+
+        .calendar-link {
+            color: yellow;
+            text-decoration: underline;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <h1>Seleccione una fecha</h1>
-    <label for="fecha">Escoge la fecha:</label><br><br>
-    <input type="date" id="fecha" name="fecha">
+<!-- Fondo desvanecido -->
+<div class="background">
+    <div class="content">
+        <h1>¿Te apetece hacer algo hoy juntos?</h1>
+        <button class="btn" onclick="showOptions()">Sí</button>
+        <button class="btn" onclick="showNoPage()">No</button>
+    </div>
+
+    <!-- Opciones después de decir "Sí" -->
+    <div id="options" class="content">
+        <h2>¿Qué te gustaría hacer?</h2>
+        <button class="btn" onclick="addToCalendar('Ir al cine')">Ir al cine</button><br>
+        <button class="btn" onclick="addToCalendar('Ir a cenar')">Ir a cenar (Donde tú elijas)</button><br>
+        <button class="btn" onclick="addToCalendar('Ir a tomar algo')">Ir a tomar algo</button><br>
+        <button class="btn" onclick="addToCalendar('Hacer picnic')">Hacer picnic</button>
+    </div>
+
+    <!-- Página de respuesta a "No" -->
+    <div id="no-page" class="content">
+        <h2>Yo sé que sí quieres :)</h2>
+        <p><a class="calendar-link" onclick="showOptions()">Ver opciones</a></p>
+    </div>
+
+    <!-- Pantalla de confirmación -->
+    <div id="confirm-page" class="content">
+        <h2>Plan seleccionado correctamente</h2>
+        <p>Se ha añadido a tus recordatorios de Apple para el sábado a las 19:30.</p>
+    </div>
+</div>
+
+<script>
+    // Mostrar las opciones al elegir "Sí"
+    function showOptions() {
+        document.querySelector('.content').style.display = 'none';
+        document.getElementById('options').style.display = 'block';
+    }
+
+    // Mostrar mensaje personalizado al elegir "No"
+    function showNoPage() {
+        document.querySelector('.content').style.display = 'none';
+        document.getElementById('no-page').style.display = 'block';
+    }
+
+    // Mostrar pantalla de confirmación al elegir una opción
+    function addToCalendar(option) {
+        document.getElementById('options').style.display = 'none';
+        addToAppleReminders(option);
+        document.getElementById('confirm-page').style.display = 'block';
+    }
+
+    // Función para añadir a Recordatorios de Apple (simulado)
+    function addToAppleReminders(option) {
+        const reminderUrl = `x-apple-reminder://create?title=${encodeURIComponent(option + ' para el sábado a las 19:30')}`;
+        window.open(reminderUrl, '_blank');
+    }
+</script>
 
 </body>
 </html>
